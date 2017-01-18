@@ -288,7 +288,44 @@ public strictfp class RobotPlayer {
 		// The code you want your robot to perform every round should be in this loop
 		while (true) {
 			try{
+                                Team enemy = rc.getTeam().opponent();
+				
+				TreeInfo[] trees = rc.senseNearbyTrees(RobotType.TANK.sensorRadius, enemy);
+				//check for sight range trees
+				if(trees.length > 1) {
+					// determine your current location
+					MapLocation myLocation = rc.getLocation();
+					
+					//go to the tree with the highest bullet number
+					int maxBulletTree = 0;
+					for(int i = 0; i < trees.length; i++)
+					{
+					   if(trees[i].getContainedBullets() > trees[maxBulletTree].getContainedBullets())
+						   { maxBulletTree = i; }
+					   else if(trees[i].getContainedBullets() == trees[maxBulletTree].getContainedBullets()){
+						   if(trees[i].getHealth() > trees[maxBulletTree].getHealth())
+							   { maxBulletTree = i; }
+					   }
+					}
+					
+					MapLocation treeLocation = trees[maxBulletTree].getLocation();
+					Direction toEnemy = myLocation.directionTo(treeLocation);
+					tryMove(toEnemy);
+					
+				} 
+				else if ( trees.length == 0)
+				{
+					//go to whatever enemy tree it can find
+					MapLocation myLocation = rc.getLocation();
+                                        MapLocation enemyLocation = trees[0].getLocation();
+					Direction toEnemy = myLocation.directionTo(enemyLocation);
 
+					tryMove(toEnemy);
+				}
+				
+				else {
+					// Move Randomly
+					tryMove(randomDirection());
 			}catch(Exception e){
 				System.out.println("Tank Exception");
 				e.printStackTrace();
