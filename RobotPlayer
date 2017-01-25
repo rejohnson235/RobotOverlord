@@ -186,9 +186,6 @@ public strictfp class RobotPlayer {
 		productionSchedule.add(RobotType.LUMBERJACK);
 		productionSchedule.add(RobotType.LUMBERJACK);
 		productionSchedule.add(RobotType.SCOUT);
-		productionSchedule.add(RobotType.LUMBERJACK);
-		productionSchedule.add(RobotType.LUMBERJACK);
-		productionSchedule.add(RobotType.SCOUT);
 		productionSchedule.add(RobotType.TANK);
 		while (true){
 			// Try/catch blocks stop unhandled exceptions, which cause your robot to explode
